@@ -6,6 +6,12 @@
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
+  "bin": {
+    "prisma-generate": "./bin/prisma-generate.js"
+  },
+  "scripts": {
+    "testo": "echo 'test'"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
