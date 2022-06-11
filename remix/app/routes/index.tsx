@@ -9,6 +9,8 @@ type LoaderData = {
 export async function loader() {
   const poetries = await db.poetry.findMany();
 
+  console.log({ poetries });
+
   return {
     poetries,
   };
@@ -22,11 +24,14 @@ export default function Index() {
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
       <h1>Poetry App</h1>
       <ul>
-        {poetries.map((poetry) => (
-          <li key={poetry.id}>
-            <a href={`/poetry/${poetry.id}`}>{poetry.title}</a>
-          </li>
-        ))}
+        {poetries.map(
+          (poetry) =>
+            poetry && (
+              <li key={poetry.id}>
+                <a href={`/poetry/${poetry.id}`}>{poetry.title}</a>
+              </li>
+            )
+        )}
       </ul>
     </div>
   );
