@@ -1,0 +1,15 @@
+{
+    "packageManager": "npm@8.1.2",
+    "workspaces": [
+      "db",
+      "nextjs",
+      "remix"
+    ],
+    "scripts": {
+    },
+    "devDependencies": {
+      "prettier": "2.6.2",
+      "turbo": "1.2.4"
+    }
+  }
+  
