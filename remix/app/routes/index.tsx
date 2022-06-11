@@ -9,8 +9,6 @@ type LoaderData = {
 export async function loader() {
   const poetries = await db.poetry.findMany();
 
-  console.log({ poetries });
-
   return {
     poetries,
   };
