@@ -6,9 +6,11 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "npx prisma generate --schema ../db/prisma/schema.prisma"
   },
   "dependencies": {
+    "@prisma/client": "^3.15.1",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0"
