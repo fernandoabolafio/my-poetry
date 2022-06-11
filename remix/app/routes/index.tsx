@@ -1,4 +1,4 @@
-import type { Poetry } from "~/db.server";
+import type { Poetry } from "@prisma/client";
 import { db } from "~/db.server";
 import { useLoaderData } from "@remix-run/react";
 
