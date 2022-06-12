@@ -25,7 +25,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>My Poetry App</h1>
+      <h1 className="text-3xl font-bold underline">My Poetry App</h1>
       <ul>
         {poetries.map(
           (poetry) =>
