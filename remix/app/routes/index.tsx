@@ -20,7 +20,7 @@ export default function Index() {
   console.log({ poetries });
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>My Poetry App</h1>
+      <h1 className="text-3xl font-bold underline">My Poetry App</h1>
       <ul>
         {poetries.map(
           (poetry) =>
