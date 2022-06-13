@@ -1,26 +1,40 @@
-import type { Poetry } from "@prisma/client";
+import type { Poetry, User } from "@prisma/client";
 import { db } from "~/db.server";
 import { useLoaderData } from "@remix-run/react";
+import { getUser, logout } from "~/session.server";
+import type { LoaderFunction } from "@remix-run/node";
+// import { Layout } from "shared/components/Layout";
 
 type LoaderData = {
   poetries: Poetry[];
+  user: User;
 };
 
-export async function loader() {
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUser(request);
+
+  if (!user) {
+    return logout(request);
+  }
+
   const poetries = await db.poetry.findMany();
 
   return {
     poetries,
+    user: user,
   };
-}
+};
 
 export default function Index() {
-  const { poetries } = useLoaderData<LoaderData>();
+  const { poetries, user } = useLoaderData<LoaderData>();
 
   console.log({ poetries });
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
+      {/* <Layout> */}
+      <span>{user.email}</span>
       <h1 className="text-3xl font-bold underline">My Poetry App</h1>
+
       <ul>
         {poetries.map(
           (poetry) =>
@@ -31,6 +45,7 @@ export default function Index() {
             )
         )}
       </ul>
+      {/* </Layout> */}
     </div>
   );
 }

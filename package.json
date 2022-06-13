@@ -3,7 +3,8 @@
     "workspaces": [
       "db",
       "nextjs",
-      "remix"
+      "remix",
+      "shared"
     ],
     "scripts": {
     },

@@ -10,7 +10,7 @@
     "prisma-generate": "./bin/prisma-generate.js"
   },
   "scripts": {
-    "testo": "echo 'test'"
+    "db:migrate": "npx prisma db push"
   },
   "author": "",
   "license": "ISC",
