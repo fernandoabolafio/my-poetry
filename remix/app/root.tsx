@@ -1,5 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
@@ -71,7 +72,9 @@ export default function App() {
       <body>
         <main className="flex justify-center">
           <div className="max-w-screen-lg p-12 flex flex-col items-center">
-            <img src="/logo.png" className="max-h-48" />
+            <Link to="/">
+              <img src="/logo.png" className="max-h-48" />
+            </Link>
             <Outlet />
           </div>
         </main>
