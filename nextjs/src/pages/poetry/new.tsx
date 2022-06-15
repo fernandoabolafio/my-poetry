@@ -4,13 +4,10 @@ export default function NewPoetryPage() {
   const ref = useRef<HTMLFormElement>(null);
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    console.log(e);
     if (ref.current) {
       const formData = new FormData(ref.current);
       const title = formData.get("title");
       const content = formData.get("content");
-
-      console.log(title, content);
 
       const res = await fetch("/api/poetry/new", {
         method: "POST",
