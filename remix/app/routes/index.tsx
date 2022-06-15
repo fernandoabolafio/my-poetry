@@ -54,9 +54,9 @@ export default function Index() {
           (poetry) =>
             poetry && (
               <li key={poetry.id} className="border gap-4 flex flex-col p-8">
-                <a href={`/poetry/${poetry.id}`}>
+                <Link to={`/poetry/${poetry.id}`}>
                   <span className="text-lg font-bold">{poetry.title}</span>
-                </a>
+                </Link>
                 <span className="text-sm font-medium text-gray-500">
                   {poetry.user.name}
                 </span>

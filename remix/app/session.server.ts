@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from "@remix-run/node";
+import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 export const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
@@ -9,3 +9,13 @@ export const { getSession, commitSession, destroySession } =
       sameSite: "lax",
     },
   });
+
+export const getUserFromSession = async (request: Request) => {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  if (!session.has("user")) {
+    throw redirect("/login");
+  }
+
+  return JSON.parse(session.get("user"));
+};
