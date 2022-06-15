@@ -12,11 +12,25 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
-  email     String   @unique
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  password  String
-  Poetry    Poetry[]
+  poetries  Poetry[]
+  likes     Like[]
+}
+
+model Like {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  poetry   Poetry @relation(fields: [poetryId], references: [id])
+  poetryId String
 }
 
 model Poetry {
@@ -28,4 +42,5 @@ model Poetry {
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
+  likes  Like[]
 }

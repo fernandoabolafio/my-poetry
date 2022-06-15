@@ -69,7 +69,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <main className="flex justify-center">
+          <div className="max-w-screen-lg p-12 flex flex-col items-center">
+            <img src="/logo.png" className="max-h-48" />
+            <Outlet />
+          </div>
+        </main>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

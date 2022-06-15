@@ -1,14 +1,18 @@
-import { Poetry } from "@prisma/client";
+import { Poetry, User } from "@prisma/client";
 import type { InferGetServerSidePropsType, NextPage } from "next";
 import Head from "next/head";
 
 import { db } from "../db";
 
 export const getServerSideProps = async () => {
-  const poetries = await db.poetry.findMany();
+  const poetries = await db.poetry.findMany({
+    include: { user: true },
+  });
   return {
     props: {
-      poetries: JSON.parse(JSON.stringify(poetries)) as Poetry[],
+      poetries: JSON.parse(JSON.stringify(poetries)) as (Poetry & {
+        user: User;
+      })[],
     },
   };
 };
@@ -25,13 +29,18 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-3xl font-bold underline">My Poetry App</h1>
-      <ul>
+      <ul className="flex gap-4 flex-col">
         {poetries.map(
           (poetry) =>
             poetry && (
-              <li key={poetry.id}>
-                <a href={`/poetry/${poetry.id}`}>{poetry.title}</a>
+              <li key={poetry.id} className="border gap-4 flex flex-col p-8">
+                <a href={`/poetry/${poetry.id}`}>
+                  <span className="text-lg font-bold">{poetry.title}</span>
+                </a>
+                <span className="text-sm font-medium text-gray-500">
+                  {poetry.user.name}
+                </span>
+                <p>{`${poetry.content.split("\n")[0]}...`}</p>
               </li>
             )
         )}

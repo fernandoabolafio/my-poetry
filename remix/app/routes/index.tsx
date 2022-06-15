@@ -2,15 +2,20 @@ import type { Poetry, User } from "@prisma/client";
 import { db } from "~/db.server";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
-// import { Layout } from "shared/components/Layout";
 
 type LoaderData = {
-  poetries: Poetry[];
+  poetries: (Poetry & {
+    user: User;
+  })[];
   user: User;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const poetries = await db.poetry.findMany();
+  const poetries = await db.poetry.findMany({
+    include: {
+      user: true,
+    },
+  });
 
   return {
     poetries,
@@ -20,23 +25,24 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Index() {
   const { poetries } = useLoaderData<LoaderData>();
 
-  console.log({ poetries });
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      {/* <Layout> */}
-      <h1 className="text-3xl font-bold underline">My Poetry App</h1>
-
-      <ul>
+      <ul className="flex gap-4 flex-col">
         {poetries.map(
           (poetry) =>
             poetry && (
-              <li key={poetry.id}>
-                <a href={`/poetry/${poetry.id}`}>{poetry.title}</a>
+              <li key={poetry.id} className="border gap-4 flex flex-col p-8">
+                <a href={`/poetry/${poetry.id}`}>
+                  <span className="text-lg font-bold">{poetry.title}</span>
+                </a>
+                <span className="text-sm font-medium text-gray-500">
+                  {poetry.user.name}
+                </span>
+                <p>{`${poetry.content.split("\n")[0]}...`}</p>
               </li>
             )
         )}
       </ul>
-      {/* </Layout> */}
     </div>
   );
 }
