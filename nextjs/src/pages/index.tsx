@@ -46,7 +46,6 @@ export const getServerSideProps: GetServerSideProps<PageData> = async ({
 const Home: NextPage<PageData> = (props) => {
   const { poetries, user } = props;
 
-  console.log({ user });
   return (
     <div>
       <Head>
