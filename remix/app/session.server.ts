@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 export const { getSession, commitSession, destroySession } =
@@ -12,12 +12,15 @@ export const { getSession, commitSession, destroySession } =
   });
 
 export const getUserFromSession = async (
-  request: Request
-): Promise<Pick<User, "id" | "name">> => {
+  request: Request,
+  redirectToLogin = true
+): Promise<Pick<User, "id" | "name"> | null> => {
   const session = await getSession(request.headers.get("Cookie"));
 
   if (!session.has("user")) {
-    throw redirect("/login");
+    if (redirectToLogin) throw redirect("/login");
+
+    return null;
   }
 
   return JSON.parse(session.get("user"));

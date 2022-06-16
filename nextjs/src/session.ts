@@ -1,12 +1,14 @@
 import { User } from "@prisma/client";
 import { getCookie } from "cookies-next";
-import { NextApiRequest, NextApiResponse } from "next";
+import { OptionsType } from "cookies-next/lib/types";
 
-export const getUserFromSession = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<Pick<User, "id" | "name">> => {
+export const getUserFromSession = ({
+  req,
+  res,
+}: OptionsType): Pick<User, "id" | "name"> | null => {
   const cookie = getCookie("userSession", { req, res });
 
-  return JSON.parse((cookie || "{}") as string);
+  if (!cookie) return null;
+
+  return JSON.parse(cookie as string);
 };

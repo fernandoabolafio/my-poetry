@@ -14,8 +14,6 @@ export default async function handler(
 ) {
   const { username } = JSON.parse(req.body);
 
-  console.log(typeof req.body);
-
   let user: User | null = null;
 
   user = await db.user.findUnique({

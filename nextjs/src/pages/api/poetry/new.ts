@@ -12,7 +12,7 @@ export default async function handler(
 
   console.log("oi");
 
-  const user = await getUserFromSession(req, res);
+  const user = await getUserFromSession({ req, res });
 
   const poetry = await db.poetry.create({
     data: {

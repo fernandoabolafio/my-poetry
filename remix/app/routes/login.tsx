@@ -41,8 +41,6 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function LoginPage() {
-  const ref = useRef<HTMLFormElement>(null);
-
   return (
     <>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -52,7 +50,7 @@ export default function LoginPage() {
               Sign in to your account
             </h2>
           </div>
-          <Form ref={ref} className="mt-8 space-y-6" method="post">
+          <Form className="mt-8 space-y-6" method="post">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>

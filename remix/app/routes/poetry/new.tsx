@@ -1,11 +1,14 @@
-import { json, LoaderFunction, redirect } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { db } from "~/db.server";
 import { getUserFromSession } from "~/session.server";
 // import { getUser, logout } from "~/session.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  return {};
+  const user = await getUserFromSession(request);
+
+  return { user };
 };
 
 export const action: LoaderFunction = async ({ request }) => {
@@ -21,6 +24,10 @@ export const action: LoaderFunction = async ({ request }) => {
 
   if (typeof content !== "string") {
     throw new Error("Content is not a string");
+  }
+
+  if (!user) {
+    throw new Error("User is not logged in");
   }
 
   const poetry = await db.poetry.create({
